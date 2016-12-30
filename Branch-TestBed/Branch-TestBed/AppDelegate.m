@@ -128,12 +128,35 @@
 }
 
 
-- (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray *))restorationHandler {
-    NSLog(@"application:continueUserActivity:restorationHandler: invoked. activityType: %@ userActivity.webpageURL: %@", userActivity.activityType, userActivity.webpageURL.absoluteString);
-    
-    // Required. Returns YES if Branch Universal Link, else returns NO. Add `branch_universal_link_domains` to .plist (String or Array) for custom domain(s).
+- (BOOL)application:(UIApplication *)application
+continueUserActivity:(NSUserActivity *)userActivity
+  restorationHandler:(void (^)(NSArray *))restorationHandler {
+
+    NSLog(@"application:continueUserActivity:restorationHandler: invoked. activityType: %@ userActivity.webpageURL: %@",
+        userActivity.activityType, userActivity.webpageURL.absoluteString);
+
+    //  Test getLatestReferringParamsSynchronous:
+
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^ {
+
+        NSDictionary *params = [[Branch getInstance] getLatestReferringParamsSynchronous];
+        dispatch_sync(dispatch_get_main_queue(), ^ {
+
+            UIAlertView *alert =
+                [[UIAlertView alloc]
+                    initWithTitle:@"Params"
+                    message:[NSString stringWithFormat:@"%@", params]
+                    delegate:nil
+                    cancelButtonTitle:@"OK"
+                    otherButtonTitles:nil];
+            [alert show];
+            });
+        });
+
+    // Required. Returns YES if Branch Universal Link, else returns NO.
+    // Add `branch_universal_link_domains` to .plist (String or Array) for custom domain(s).
     [[Branch getInstance] continueUserActivity:userActivity];
-    
+
     // Process non-Branch userActivities here...
     return YES;
 }

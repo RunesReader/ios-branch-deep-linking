@@ -180,9 +180,7 @@
 #pragma - Open Response Lock Handling
 
 
-typedef dispatch_block_t BNCVoidBlockType;
-
-static inline void BNCPerformBlockOnMainThreadSynchronous(BNCVoidBlockType block) {
+static inline void BNCPerformBlockOnMainThreadSynchronous(dispatch_block_t block) {
 	if ([NSThread currentThread] == [NSThread mainThread])
 		block();
 	else
@@ -192,10 +190,12 @@ static inline void BNCPerformBlockOnMainThreadSynchronous(BNCVoidBlockType block
 static NSLock *openResponseLock = nil;
 
 + (void) initialize {
-    if (self == [BranchOpenRequest self]) {
-        BNCPerformBlockOnMainThreadSynchronous(^ {
-            openResponseLock = [[NSLock alloc] init];
-        });
+    if (self != [BranchOpenRequest self])
+        return;
+
+    BNCPerformBlockOnMainThreadSynchronous(^ {
+        openResponseLock = [[NSLock alloc] init];
+    });
     }
 }
 
@@ -204,7 +204,7 @@ static NSLock *openResponseLock = nil;
 }
 
 + (void) waitForOpenResponseLock {
-    BNCPerformBlockOnMainThreadSynchronous(^{[openResponseLock lock];});
+    //BNCPerformBlockOnMainThreadSynchronous(^{[openResponseLock lock];});
 }
 
 + (void) releaseOpenResponseLock {
