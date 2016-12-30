@@ -140,7 +140,7 @@ continueUserActivity:(NSUserActivity *)userActivity
     [[Branch getInstance] continueUserActivity:userActivity];
 
     //  Test getLatestReferringParamsSynchronous:
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^ {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^ {
 
         NSDictionary *params = [[Branch getInstance] getLatestReferringParamsSynchronous];
         dispatch_sync(dispatch_get_main_queue(), ^ {
