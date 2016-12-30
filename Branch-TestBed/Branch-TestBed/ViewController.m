@@ -171,7 +171,7 @@ NSString *type = @"some type";
 
 - (IBAction)viewLatestReferringParamsButtonTouchUpInside:(id)sender {
     Branch *branch = [Branch getInstance];
-    [self performSegueWithIdentifier:@"ShowLogOutput" sender:[[branch getLatestReferringParams] description]];
+    [self performSegueWithIdentifier:@"ShowLogOutput" sender:[[branch getLatestReferringParamsSynchronous] description]];
     NSLog(@"Branch TestBed: LatestReferringParams:\n%@", [[branch getLatestReferringParams] description]);
 }
 

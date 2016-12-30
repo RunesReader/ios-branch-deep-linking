@@ -136,7 +136,6 @@ continueUserActivity:(NSUserActivity *)userActivity
         userActivity.activityType, userActivity.webpageURL.absoluteString);
 
     //  Test getLatestReferringParamsSynchronous:
-
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^ {
 
         NSDictionary *params = [[Branch getInstance] getLatestReferringParamsSynchronous];
