@@ -117,9 +117,16 @@
     [[Branch getInstance] resumeInit];
 }
 
-- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication
+         annotation:(id)annotation {
+
     NSLog(@"application:openURL:sourceApplication:annotation: invoked with URL: %@", [url description]);
-    
+
+    //  Test getLatestReferringParamsSynchronous:
+    [self testGetLatestReferringParamsSynchronous];
+
     // Required. Returns YES if Branch link, else returns NO
     [[Branch getInstance] handleDeepLink:url];
     
@@ -127,17 +134,7 @@
     return YES;
 }
 
-
-- (BOOL)application:(UIApplication *)application
-continueUserActivity:(NSUserActivity *)userActivity
-  restorationHandler:(void (^)(NSArray *))restorationHandler {
-
-    NSLog(@"application:continueUserActivity:restorationHandler: invoked. activityType: %@ userActivity.webpageURL: %@",
-        userActivity.activityType, userActivity.webpageURL.absoluteString);
-
-    // Required. Returns YES if Branch Universal Link, else returns NO.
-    // Add `branch_universal_link_domains` to .plist (String or Array) for custom domain(s).
-    [[Branch getInstance] continueUserActivity:userActivity];
+- (void)testGetLatestReferringParamsSynchronous {
 
     //  Test getLatestReferringParamsSynchronous:
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^ {
@@ -155,6 +152,21 @@ continueUserActivity:(NSUserActivity *)userActivity
             [alert show];
             });
         });
+}
+
+- (BOOL)application:(UIApplication *)application
+continueUserActivity:(NSUserActivity *)userActivity
+  restorationHandler:(void (^)(NSArray *))restorationHandler {
+
+    NSLog(@"application:continueUserActivity:restorationHandler: invoked. activityType: %@ userActivity.webpageURL: %@",
+        userActivity.activityType, userActivity.webpageURL.absoluteString);
+
+    //  Test getLatestReferringParamsSynchronous:
+    [self testGetLatestReferringParamsSynchronous];
+
+    // Required. Returns YES if Branch Universal Link, else returns NO.
+    // Add `branch_universal_link_domains` to .plist (String or Array) for custom domain(s).
+    [[Branch getInstance] continueUserActivity:userActivity];
 
     // Process non-Branch userActivities here...
     return YES;
