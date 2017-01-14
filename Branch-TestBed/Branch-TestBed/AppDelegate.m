@@ -124,7 +124,7 @@
 
     NSLog(@"application:openURL:sourceApplication:annotation: invoked with URL: %@", [url description]);
 
-    //  Test getLatestReferringParamsSynchronous:
+    // Test getLatestReferringParamsSynchronous:
     [self testGetLatestReferringParamsSynchronous];
 
     // Required. Returns YES if Branch link, else returns NO
@@ -136,12 +136,32 @@
 
 - (void)testGetLatestReferringParamsSynchronous {
 
-    //  Test getLatestReferringParamsSynchronous:
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^ {
+    //  Show an alert when we return from getLatestReferringParamsSynchronous:
+
+#if 1
+
+    dispatch_async(dispatch_get_main_queue(), ^ {
 
         NSDictionary *params = [[Branch getInstance] getLatestReferringParamsSynchronous];
-        dispatch_sync(dispatch_get_main_queue(), ^ {
+        UIAlertView *alert =
+            [[UIAlertView alloc]
+                initWithTitle:@"Params"
+                message:[NSString stringWithFormat:@"%@", params]
+                delegate:nil
+                cancelButtonTitle:@"OK"
+                otherButtonTitles:nil];
+        [alert show];
+    });
 
+#else
+
+    long queueToTest = DISPATCH_QUEUE_PRIORITY_HIGH;
+//  long queueToTest = DISPATCH_QUEUE_PRIORITY_BACKGROUND;
+
+    dispatch_async(dispatch_get_global_queue(queueToTest, 0), ^ {
+
+        NSDictionary *params = [[Branch getInstance] getLatestReferringParamsSynchronous];
+        dispatch_async(dispatch_get_main_queue(), ^ {
             UIAlertView *alert =
                 [[UIAlertView alloc]
                     initWithTitle:@"Params"
@@ -150,8 +170,10 @@
                     cancelButtonTitle:@"OK"
                     otherButtonTitles:nil];
             [alert show];
-            });
         });
+    });
+
+#endif
 }
 
 - (BOOL)application:(UIApplication *)application
@@ -161,7 +183,7 @@ continueUserActivity:(NSUserActivity *)userActivity
     NSLog(@"application:continueUserActivity:restorationHandler: invoked. activityType: %@ userActivity.webpageURL: %@",
         userActivity.activityType, userActivity.webpageURL.absoluteString);
 
-    //  Test getLatestReferringParamsSynchronous:
+    // Test getLatestReferringParamsSynchronous:
     [self testGetLatestReferringParamsSynchronous];
 
     // Required. Returns YES if Branch Universal Link, else returns NO.
