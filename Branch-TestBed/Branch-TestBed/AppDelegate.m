@@ -11,6 +11,7 @@
 #import "NavigationController.h"
 #import "ViewController.h"
 #import <SafariServices/SafariServices.h>
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
 
 @interface AppDelegate() <SFSafariViewControllerDelegate>
 @property (nonatomic, strong) SFSafariViewController *onboardingVC;
@@ -29,10 +30,13 @@
     
     // Comment / un-comment to toggle debugging:
     [branch setDebug];
-    
+
     // For Apple Search Ads
-    // [branch delayInitToCheckForSearchAds];
+    [branch delayInitToCheckForSearchAds];
     // [branch setAppleSearchAdsDebugMode];
+
+    // Add Facebook deferred deep linking:
+    [branch registerFacebookDeepLinkingClass:[FBSDKAppLinkUtility class]];
 
     [branch setWhiteListedSchemes:@[@"branchtest"]];
 

@@ -89,6 +89,8 @@
 		46DC40801B2B84CD00D2D203 /* BranchShortUrlRequestTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 46DC407F1B2B84CD00D2D203 /* BranchShortUrlRequestTests.m */; };
 		46FD92BA1AE7E8F80012E78F /* BNCSystemObserverTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 46FD92B91AE7E8F80012E78F /* BNCSystemObserverTests.m */; };
 		46FFCF171ACC321A00039CE0 /* BNCEncodingUtilsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 46FFCF161ACC321A00039CE0 /* BNCEncodingUtilsTests.m */; };
+		4D0ACC5C1E429EFC00B8E4F3 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D0ACC5B1E429EFC00B8E4F3 /* FBSDKCoreKit.framework */; };
+		4D0ACC5E1E429F6600B8E4F3 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D0ACC5D1E429F6600B8E4F3 /* Bolts.framework */; };
 		4D35141B1E3201D80085EBA1 /* NSMutableDictionary+Branch.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D3514191E3201D80085EBA1 /* NSMutableDictionary+Branch.h */; };
 		4D35141C1E3201D80085EBA1 /* NSMutableDictionary+Branch.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D35141A1E3201D80085EBA1 /* NSMutableDictionary+Branch.m */; };
 		4D3FA94B1DFF31EB00E2B6A9 /* BNCConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D3FA94A1DFF31EB00E2B6A9 /* BNCConfig.m */; };
@@ -211,6 +213,8 @@
 		46DC407F1B2B84CD00D2D203 /* BranchShortUrlRequestTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BranchShortUrlRequestTests.m; sourceTree = "<group>"; };
 		46FD92B91AE7E8F80012E78F /* BNCSystemObserverTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNCSystemObserverTests.m; sourceTree = "<group>"; };
 		46FFCF161ACC321A00039CE0 /* BNCEncodingUtilsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNCEncodingUtilsTests.m; sourceTree = "<group>"; };
+		4D0ACC5B1E429EFC00B8E4F3 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
+		4D0ACC5D1E429F6600B8E4F3 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 		4D3514191E3201D80085EBA1 /* NSMutableDictionary+Branch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableDictionary+Branch.h"; sourceTree = "<group>"; };
 		4D35141A1E3201D80085EBA1 /* NSMutableDictionary+Branch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableDictionary+Branch.m"; sourceTree = "<group>"; };
 		4D3FA94A1DFF31EB00E2B6A9 /* BNCConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNCConfig.m; sourceTree = "<group>"; };
@@ -325,8 +329,10 @@
 				67163AAE1B9A036F007A8AB1 /* SafariServices.framework in Frameworks */,
 				46DC406E1B2A328900D2D203 /* AdSupport.framework in Frameworks */,
 				466B58811B1778DB00A69EDE /* libBranch.a in Frameworks */,
+				4D0ACC5E1E429F6600B8E4F3 /* Bolts.framework in Frameworks */,
 				670016661940F51400A9E103 /* CoreGraphics.framework in Frameworks */,
 				670016681940F51400A9E103 /* UIKit.framework in Frameworks */,
+				4D0ACC5C1E429EFC00B8E4F3 /* FBSDKCoreKit.framework in Frameworks */,
 				670016641940F51400A9E103 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -432,8 +438,10 @@
 		670016621940F51400A9E103 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4D0ACC5D1E429F6600B8E4F3 /* Bolts.framework */,
 				4DDC52611DCC08E700CFB737 /* iAd.framework */,
 				67F270881BA9FCFF002546A7 /* CoreSpotlight.framework */,
+				4D0ACC5B1E429EFC00B8E4F3 /* FBSDKCoreKit.framework */,
 				67163AAD1B9A036F007A8AB1 /* SafariServices.framework */,
 				466B58501B17776000A69EDE /* CoreTelephony.framework */,
 				67BBCF271A69E49A009C7DAE /* AdSupport.framework */,
@@ -1089,6 +1097,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = R63EM248DP;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Branch-TestBed/Branch-TestBed-Prefix.pch";
 				INFOPLIST_FILE = "Branch-TestBed/Branch-TestBed-Info.plist";
@@ -1110,6 +1122,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = R63EM248DP;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Branch-TestBed/Branch-TestBed-Prefix.pch";
 				INFOPLIST_FILE = "Branch-TestBed/Branch-TestBed-Info.plist";
