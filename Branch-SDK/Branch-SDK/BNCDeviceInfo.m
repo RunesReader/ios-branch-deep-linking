@@ -127,7 +127,7 @@ static BNCDeviceInfo *bncDeviceInfo;
                 setBrowserUserAgent();
                 NSLog(@"Did  userAgent.");
             });
-		dispatch_async(dispatch_get_main_queue(), agentBlock);
+        dispatch_async(dispatch_get_main_queue(), agentBlock);
 
 		dispatch_time_t timeoutTime = dispatch_time(DISPATCH_TIME_NOW, timeoutDelta);
 		long result = dispatch_block_wait(agentBlock, timeoutTime);
