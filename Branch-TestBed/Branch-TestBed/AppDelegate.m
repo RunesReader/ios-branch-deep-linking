@@ -138,7 +138,7 @@
 
     //  Show an alert when we return from getLatestReferringParamsSynchronous:
 
-#if 1
+#if 0
 
     dispatch_async(dispatch_get_main_queue(), ^ {
 
