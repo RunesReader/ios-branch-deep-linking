@@ -374,8 +374,8 @@ void ForceCategoriesToLoad() {
             
             self.asyncRequestCount = 0;
 
-            // These calls increment self.asyncRequestCount internally if they make an async call:
-            
+            // These methods will increment self.asyncRequestCount if they make an async call:
+
             // If Facebook SDK is present, call deferred app link check here which will later on call initUserSession
             [self checkFacebookAppLinks];
             // If developer opted in, call deferred apple search attribution API here which will later on call initUserSession
