@@ -199,11 +199,18 @@ class ViewController: UITableViewController {
     }
     
     @IBAction func actionButtonTouchUpInside(_ sender: AnyObject) {
-        
+
         for key in linkProperties.keys {
             setBranchLinkProperty(key)
         }
-        
+
+        let dateFormat = DateFormatter()
+        dateFormat.locale = Locale(identifier: "en_US_POSIX");
+        dateFormat.dateFormat = "yyyy-MM-dd'T'HH:mm:ssX"
+        dateFormat.timeZone = TimeZone(secondsFromGMT: 0)
+
+        branchLinkProperties.alias = String(format: "share-%@", dateFormat.string(from: Date()))
+
         if let canonicalIdentifier = universalObjectProperties["$canonical_identifier"] as? String {
             branchUniversalObject = BranchUniversalObject.init(canonicalIdentifier: canonicalIdentifier)
         } else {
@@ -218,7 +225,11 @@ class ViewController: UITableViewController {
             setBranchUniversalObjectProperty(key)
         }
 
-        branchUniversalObject.showShareSheet(with: branchLinkProperties, andShareText: shareText, from: self, anchor: actionButton) { (activityType, completed) in
+        branchUniversalObject.showShareSheet(with: branchLinkProperties,
+            andShareText: shareText,
+            from: self,
+            anchor: actionButton
+            ) { (activityType, completed) in
             if (completed) {
                 print(String(format: "Branch TestBed: Completed sharing to %@", activityType!))
             } else {

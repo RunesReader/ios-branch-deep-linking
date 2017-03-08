@@ -209,15 +209,20 @@ NSString *type = @"some type";
     BranchLinkProperties *linkProperties = [[BranchLinkProperties alloc] init];
     linkProperties.feature = feature;
     linkProperties.campaign = @"sharing campaign";
+    linkProperties.alias = @"test-bed-share";
     [linkProperties addControlParam:@"$desktop_url" withValue: desktop_url];
     [linkProperties addControlParam:@"$ios_url" withValue: ios_url];
     
-    [self.branchUniversalObject showShareSheetWithLinkProperties:linkProperties andShareText:shareText fromViewController:self.parentViewController completion:^(NSString *activityType, BOOL completed) {
-        if (completed) {
-            NSLog(@"%@", [NSString stringWithFormat:@"Branch TestBed: Completed sharing to %@", activityType]);
-        } else {
-            NSLog(@"%@", [NSString stringWithFormat:@"Branch TestBed: Sharing failed"]);
-        }
+    [self.branchUniversalObject showShareSheetWithLinkProperties:linkProperties
+        andShareText:shareText
+        fromViewController:self.parentViewController
+        completion:^(NSString *activityType, BOOL completed) {
+            if (completed) {
+                NSLog(@"Branch TestBed: Completed sharing to %@.", activityType);
+                NSLog(@"Link: %@.", self.branchUniversalObject);
+            } else {
+                NSLog(@"%@", [NSString stringWithFormat:@"Branch TestBed: Sharing failed"]);
+            }
     }];
 }
 
