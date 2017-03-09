@@ -197,7 +197,7 @@ class ViewController: UITableViewController {
     }
     
     @IBAction func actionButtonTouchUpInside(_ sender: AnyObject) {
-        //  Share a branch link:
+        //  Share a Branch link:
 
         let dateFormat = DateFormatter()
         dateFormat.locale = Locale(identifier: "en_US_POSIX");
