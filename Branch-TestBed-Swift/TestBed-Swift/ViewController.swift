@@ -53,8 +53,6 @@ class ViewController: UITableViewController {
     let branchLinkProperties = BranchLinkProperties()
     var branchUniversalObject = BranchUniversalObject()
 
-    let shareText = "Shared from Branch's TestBed-Swift"
-    
     let linkKeys: Set = ["~channel","~feature","~campaign","~stage",
                          "~tags","+spotlight_type","$fallback_url","$desktop_url",
                          "$ios_url","$ipad_url","$android_url","$windows_phone_url",
@@ -199,41 +197,41 @@ class ViewController: UITableViewController {
     }
     
     @IBAction func actionButtonTouchUpInside(_ sender: AnyObject) {
-
-        for key in linkProperties.keys {
-            setBranchLinkProperty(key)
-        }
+        //  Share a branch link:
 
         let dateFormat = DateFormatter()
         dateFormat.locale = Locale(identifier: "en_US_POSIX");
         dateFormat.dateFormat = "yyyy-MM-dd'T'HH:mm:ssX"
         dateFormat.timeZone = TimeZone(secondsFromGMT: 0)
 
-        branchLinkProperties.alias = String(format: "share-%@", dateFormat.string(from: Date()))
+        //let alias = String(format: "share-%@", dateFormat.string(from: Date()))
+        let alias = "share-Share-Same-Name-3"
+        let kCanonicalIdentifier = alias
 
-        if let canonicalIdentifier = universalObjectProperties["$canonical_identifier"] as? String {
-            branchUniversalObject = BranchUniversalObject.init(canonicalIdentifier: canonicalIdentifier)
-        } else {
-            var canonicalIdentifier = ""
-            for _ in 1...18 {
-                canonicalIdentifier.append(String(arc4random_uniform(10)))
-            }
-            branchUniversalObject = BranchUniversalObject.init(canonicalIdentifier: canonicalIdentifier)
-        }
-        
-        for key in universalObjectProperties.keys {
-            setBranchUniversalObjectProperty(key)
-        }
+        let shareBranchLink = BranchUniversalObject.init(canonicalIdentifier: kCanonicalIdentifier)
+        shareBranchLink.title = "Share Branch Link Example"
+        shareBranchLink.canonicalUrl = "https://developer.branch.io/"
+        shareBranchLink.imageUrl = "https://dev.branch.io/img/branch_docs_logo.png"
+        shareBranchLink.keywords = [ "example", "short", "link" ]
+        shareBranchLink.contentDescription = "This is an example shared short link."
+        shareBranchLink.addMetadataKey("publicSlug", value: kCanonicalIdentifier)
 
-        branchUniversalObject.showShareSheet(with: branchLinkProperties,
+        let shareLinkProperties = BranchLinkProperties()
+        shareLinkProperties.alias = "link/\(kCanonicalIdentifier)"
+        shareLinkProperties.channel = "ios-app"
+        shareLinkProperties.controlParams = ["$fallback_url": "https://support.branch.io/support/home"]
+
+        let shareText = "Shared from Branch's TestBed-Swift at \(dateFormat.string(from: Date()))"
+
+        shareBranchLink.showShareSheet(with: shareLinkProperties,
             andShareText: shareText,
             from: self,
             anchor: actionButton
             ) { (activityType, completed) in
             if (completed) {
-                print(String(format: "Branch TestBed: Completed sharing to %@", activityType!))
+                print(String(format: "Branch TestBed: Completed sharing to %@.", activityType!))
             } else {
-                print("Branch TestBed: Link Sharing Cancelled\n")
+                print("Branch TestBed: Link Sharing Cancelled.\n")
             }
         }
     }
