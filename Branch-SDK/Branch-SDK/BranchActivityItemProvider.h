@@ -30,6 +30,7 @@
 @interface BranchActivityItemProvider : UIActivityItemProvider
 
 - (id)initWithParams:(NSDictionary *)params andTags:(NSArray *)tags andFeature:(NSString *)feature andStage:(NSString *)stage andAlias:(NSString *)alias  __attribute__((deprecated(("Use the delegate method instead"))));;
+
 - (id)initWithParams:(NSDictionary *)params tags:(NSArray *)tags feature:(NSString *)feature stage:(NSString *)stage campaign:(NSString *)campaign alias:(NSString *)alias delegate:(id <BranchActivityItemProviderDelegate>)delegate;
 
 @end

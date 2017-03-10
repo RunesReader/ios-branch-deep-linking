@@ -61,15 +61,41 @@
     if ([self.delegate respondsToSelector:@selector(activityItemOverrideChannelForChannel:)]) {
         channel = [self.delegate activityItemOverrideChannelForChannel:channel];
     }
-    
-    // Because Facebook et al immediately scrape URLs, we add an additional parameter to the existing list, telling the backend to ignore the first click
+
+    NSString *URLString = nil;
+
+    // Because Facebook et al immediately scrape URLs, we add an additional parameter to the
+    // existing list, telling the backend to ignore the first click:
     NSArray *scrapers = @[@"Facebook", @"Twitter", @"Slack", @"Apple Notes"];
     for (NSString *scraper in scrapers) {
-        if ([channel isEqualToString:scraper])
-            return [NSURL URLWithString:[[Branch getInstance] getShortURLWithParams:params andTags:tags andChannel:channel andFeature:feature andStage:stage andCampaign:campaign andAlias:alias ignoreUAString:self.userAgentString forceLinkCreation:YES]];
+        if ([channel isEqualToString:scraper]) {
+            URLString = [[Branch getInstance]
+                getShortURLWithParams:params
+                andTags:tags
+                andChannel:channel
+                andFeature:feature
+                andStage:stage
+                andCampaign:campaign
+                andAlias:alias
+                ignoreUAString:self.userAgentString
+                forceLinkCreation:YES];
+            break;
+        }
     }
-    return [NSURL URLWithString:[[Branch getInstance] getShortURLWithParams:params andTags:tags andChannel:channel andFeature:feature andStage:stage andCampaign:campaign andAlias:alias ignoreUAString:nil forceLinkCreation:YES]];
+    if (!URLString) {
+        URLString = [[Branch getInstance]
+            getShortURLWithParams:params
+            andTags:tags
+            andChannel:channel
+            andFeature:feature
+            andStage:stage
+            andCampaign:campaign
+            andAlias:alias
+            ignoreUAString:nil
+            forceLinkCreation:YES];
+    }
 
+    return [NSURL URLWithString:URLString];
 }
 
 #pragma mark - Internals
